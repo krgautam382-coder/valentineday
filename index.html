@@ -38,6 +38,10 @@
             width: 90%;
             max-width: 650px;
             padding: 20px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* Initial Tap Button */
@@ -46,7 +50,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100%;
             transition: opacity 2s ease;
         }
 
@@ -74,26 +78,66 @@
             letter-spacing: 1px;
         }
 
-        /* The Story Text */
+        /* The Story Screen Container */
         #story-screen {
             display: none;
             position: relative;
-            height: 80vh;
-            display: flex;
+            height: 100%;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
+        /* Image Container for Story */
+        .story-image-container {
+            position: relative;
+            width: 100%;
+            height: 300px; /* Fixed height for images */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .story-img {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            width: auto;
+            border-radius: 8px;
+            border: 2px solid #333;
+            box-shadow: 0 0 25px rgba(139, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 2s ease, transform 2s ease;
+            filter: contrast(110%) brightness(90%);
+        }
+
+        .story-img.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Text Container for Story */
+        .story-text-container {
+            position: relative;
+            width: 100%;
+            height: 150px; /* Fixed height for text area */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .line {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             line-height: 1.6;
             color: #e0e0e0;
             opacity: 0;
             position: absolute;
             width: 100%;
             transform: translateY(20px);
-            transition: opacity 2.5s ease, transform 2.5s ease;
+            transition: opacity 2s ease, transform 2s ease;
             text-shadow: 0 2px 10px rgba(0,0,0,1);
         }
 
@@ -108,19 +152,8 @@
         }
 
         /* Highlight Colors */
-        .highlight-gold {
-            color: #d4af37; 
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .highlight-red {
-            color: #ff4b2b; 
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: bold;
-        }
+        .highlight-gold { color: #d4af37; font-family: 'Cinzel', serif; font-weight: bold; }
+        .highlight-red { color: #ff4b2b; font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.8rem; }
 
         /* Final Screen */
         #final-screen {
@@ -168,8 +201,7 @@
 <body>
 
     <div class="ambient-glow" id="bg-glow"></div>
-
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop hidden>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
@@ -180,25 +212,38 @@
             <div class="start-text">Take a deep breath...<br>Then tap the heart.</div>
         </div>
 
-        <div id="story-screen" style="display: none;">
-            <div class="line" id="line0">Meri Betu...</div>
-            <div class="line" id="line1">Aaj hum door zaroor hain, par meri har dhadkan sirf tumhara naam leti hai.</div>
-            <div class="line" id="line2">Raat ko jab akele hota hoon, toh bas wo sapne dekhta hoon jo humne ek saath dekhe hain...</div>
-            <div class="line" id="line3">Ek chota sa aashiyana, tumhari godh mein mera sir, aur hamara aane wala kal.</div>
-            <div class="line" id="line4">Tumhe lagta hoga Guplu kabhi kabhi gussa karta hai, ya ajeeb behave karta hai...</div>
-            <div class="line" id="line5">Par sach kahu? Main tumhe lekar itna possessive hoon ki kisi aur ka tumhe dekhna bhi bardasht nahi hota.</div>
-            <div class="line" id="line6">Tum sirf meri ho. Meri thi, aur hamesha meri rahogi. Aur ye haq main kisi ko nahi dunga.</div>
-            <div class="line" id="line7">Main tumhe itna pyaar dena chahta hoon, jitna is duniya mein kisi ne kisi ko na diya ho.</div>
-            <div class="line" id="line8">Tumhara gussa, tumhara bachpana, tumhari har zidd... sab mujhe qubool hai.</div>
-            <div class="line" id="line9">Tumhe pata hai meri sabse badi sacchai kya hai?</div>
-            <div class="line highlight-gold" id="line10">Is poori duniya mein...<br>Is poore universe mein...</div>
-            <div class="line highlight-red" id="line11">Koi bhi Betu ko uske Guplu se zyada pyaar nahi kar sakta.<br><span style="font-size:1.2rem; color:#888;">Koi bhi nahi.</span></div>
-            <div class="line" id="line12">Duniya kehti hai ki insaan ek hi baar jeeta hai...</div>
-            <div class="line highlight-gold" id="line13">Par mujhe yakeen hai, I have loved you in every birth I have ever taken.</div>
-            <div class="line" id="line14">Aur aage aane wale har janam mein, meri rooh sirf aur sirf tumhi ko dhoondhegi.</div>
-            <div class="line" id="line15">Maine tumhe apni taqdeer mein nahi, apni rooh mein likhwaya hai.</div>
-            <div class="line" id="line16">Aaj is din par, mere paas tumhe dene ke liye sirf ek hi cheez hai... mera sab kuch.</div>
-            <div class="line highlight-red" id="line17" style="font-size: 2.4rem;">Will you be my Valentine...<br>not just for today, but for this lifetime and forever?</div>
+        <div id="story-screen">
+            
+            <div class="story-image-container">
+                <img src="image_15.jpg" id="img-set-1" class="story-img">
+                <img src="image_14.jpg" id="img-set-2" class="story-img">
+                <img src="image_17.jpg" id="img-set-3" class="story-img">
+                <img src="image_16.jpg" id="img-set-4" class="story-img">
+                <img src="image_18.jpg" id="img-set-5" class="story-img">
+                <img src="image_20.jpg" id="img-set-6" class="story-img">
+                <img src="promise5.jpg" id="img-set-7" class="story-img">
+            </div>
+
+            <div class="story-text-container">
+                <div class="line" id="line0">Meri Betu...</div>
+                <div class="line" id="line1">Aaj hum door zaroor hain, par meri har dhadkan sirf tumhara naam leti hai.</div>
+                <div class="line" id="line2">Raat ko jab akele hota hoon, toh bas wo sapne dekhta hoon jo humne ek saath dekhe hain...</div>
+                <div class="line" id="line3">Ek chota sa aashiyana, tumhari godh mein mera sir, aur hamara aane wala kal.</div>
+                <div class="line" id="line4">Tumhe lagta hoga Guplu kabhi kabhi gussa karta hai, ya ajeeb behave karta hai...</div>
+                <div class="line" id="line5">Par sach kahu? Main tumhe lekar itna possessive hoon ki kisi aur ka tumhe dekhna bhi bardasht nahi hota.</div>
+                <div class="line" id="line6">Tum sirf meri ho. Meri thi, aur hamesha meri rahogi. Ye haq main kisi ko nahi dunga.</div>
+                <div class="line" id="line7">Main tumhe itna pyaar dena chahta hoon, jitna is duniya mein kisi ne kisi ko na diya ho.</div>
+                <div class="line" id="line8">Tumhara gussa, tumhara bachpana, tumhari har zidd... sab mujhe qubool hai.</div>
+                <div class="line" id="line9">Tumhe pata hai meri sabse badi sacchai kya hai?</div>
+                <div class="line highlight-gold" id="line10">Is poori duniya mein...<br>Is poore universe mein...</div>
+                <div class="line highlight-red" id="line11">Koi bhi Betu ko uske Guplu se zyada pyaar nahi kar sakta.<br><span style="font-size:1rem; color:#888;">Koi nahi.</span></div>
+                <div class="line" id="line12">Duniya kehti hai ki insaan ek hi baar jeeta hai...</div>
+                <div class="line highlight-gold" id="line13">Par mujhe yakeen hai, I have loved you in every birth I have ever taken.</div>
+                <div class="line" id="line14">Aur aage aane wale har janam mein, meri rooh sirf aur sirf tumhi ko dhoondhegi.</div>
+                <div class="line" id="line15">Maine tumhe apni taqdeer mein nahi, apni rooh mein likhwaya hai.</div>
+                <div class="line" id="line16">Aaj is din par, mere paas tumhe dene ke liye sirf ek hi cheez hai... mera sab kuch.</div>
+                <div class="line highlight-red" id="line17">Will you be my Valentine...<br>not just for today, but for forever?</div>
+            </div>
         </div>
 
         <div id="final-screen">
@@ -215,35 +260,26 @@
     </div>
 
     <script>
-        // Timings for each line to stay on screen (in milliseconds)
-        const timings = [
-            4000,  // 0: Meri Betu...
-            5000,  // 1: Door zaroor hain, par dhadkan
-            6000,  // 2: Raat ko jab akele, sapne dekhta hoon
-            6000,  // 3: Ek chota sa aashiyana (The Dream)
-            5500,  // 4: Tumhe lagta hoga gussa karta hoon
-            6500,  // 5: Possessive hoon, bardasht nahi hota (Jealousy)
-            6000,  // 6: Tum sirf meri ho (Possessiveness)
-            6000,  // 7: Itna pyaar dena chahta hoon (Massive Love)
-            5500,  // 8: Tumhara gussa, bachpana qubool hai
-            4000,  // 9: Sabse badi sacchai
-            4500,  // 10: Poori duniya mein (Gold)
-            6500,  // 11: Koi Guplu se zyada pyaar nahi kar sakta (Red)
-            5000,  // 12: Duniya kehti hai ek baar jeete hain
-            6000,  // 13: Loved you in every birth (Gold)
-            6000,  // 14: Har janam mein dhoondhegi
-            5500,  // 15: Taqdeer nahi, rooh mein
-            5500,  // 16: Dene ke liye mera sab kuch
-            7500   // 17: Will you be my Valentine forever? (Red - Long Pause)
-        ];
+        const timings = [4000, 5000, 6000, 6000, 5500, 6500, 6000, 6000, 5500, 4000, 4500, 6500, 5000, 6000, 6000, 5500, 5500, 7500];
+        
+        // Map specific lines to specific image sets
+        const imageChangePoints = {
+            0: 'img-set-1', // Missing Her
+            3: 'img-set-2', // The Dream
+            4: 'img-set-3', // Possessiveness
+            7: 'img-set-4', // Acceptance
+            9: 'img-set-5', // Big Truth
+            12: 'img-set-6', // Every Birth
+            16: 'img-set-7'  // Proposal
+        };
+
+        let currentVisibleImageId = null;
 
         function beginJourney() {
-            // Start Music
             var music = document.getElementById("bgMusic");
             music.volume = 0.6; 
             music.play().catch(error => console.log("Audio play failed"));
 
-            // Hide start screen, show ambient background
             document.getElementById('start-screen').style.opacity = '0';
             document.getElementById('bg-glow').style.opacity = '1';
             
@@ -256,17 +292,32 @@
 
         function playLines(index) {
             if (index < timings.length) {
+                // 1. Handle Image Changes
+                if (imageChangePoints[index]) {
+                    // Hide previous image if exists
+                    if (currentVisibleImageId) {
+                        document.getElementById(currentVisibleImageId).classList.remove('visible');
+                    }
+                    // Show new image
+                    const newImageId = imageChangePoints[index];
+                    document.getElementById(newImageId).classList.add('visible');
+                    currentVisibleImageId = newImageId;
+                }
+
+                // 2. Handle Text
                 let currentLine = document.getElementById('line' + index);
-                
-                // Fade In
                 currentLine.classList.add('visible');
 
-                // Wait, then Fade Out
+                // Wait, then fade out text
                 setTimeout(() => {
                     currentLine.classList.remove('visible');
                     currentLine.classList.add('fade-out');
                     
-                    // Move to next line slightly before current finishes fading
+                    // If the NEXT line triggers an image change, fade out current image now
+                    if (imageChangePoints[index + 1] && currentVisibleImageId) {
+                         document.getElementById(currentVisibleImageId).classList.remove('visible');
+                    }
+
                     setTimeout(() => {
                         playLines(index + 1);
                     }, 1200); 
@@ -274,11 +325,10 @@
                 }, timings[index]);
 
             } else {
-                // All lines done, show final screen
+                // End Sequence
                 setTimeout(() => {
                     document.getElementById('story-screen').style.display = 'none';
                     document.getElementById('final-screen').classList.add('visible');
-                    // Increase glow intensity for finale to a deep romantic red
                     document.getElementById('bg-glow').style.background = 'radial-gradient(circle at center, rgba(160, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 80%)';
                 }, 1000);
             }
