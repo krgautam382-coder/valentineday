@@ -3,285 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Forever, Betu ❤️</title>
+    <title>Promises For Betu ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;600&display=swap');
 
         body {
             margin: 0;
             padding: 0;
-            background-color: #030303; /* Deep, absolute black for focus */
+            background: radial-gradient(circle at center, #2c3e50, #000000); /* Deep Blue/Black for a premium feel */
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Poppins', sans-serif;
             overflow: hidden;
-            color: #fff;
+            color: white;
             text-align: center;
         }
 
-        /* Ambient glowing background */
-        .ambient-glow {
+        /* Floating Hearts Animation */
+        .heart-bg {
             position: absolute;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, rgba(139, 0, 0, 0.15) 0%, rgba(0, 0, 0, 1) 70%);
-            z-index: 0;
+            width: 10px;
+            height: 10px;
+            background: #e91e63;
+            transform: rotate(45deg);
+            animation: floatHeart 10s infinite linear;
             opacity: 0;
-            transition: opacity 3s ease;
+            z-index: 0;
+        }
+        .heart-bg::before, .heart-bg::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #e91e63;
+            border-radius: 50%;
+        }
+        .heart-bg::before { top: -5px; left: 0; }
+        .heart-bg::after { top: 0; left: -5px; }
+
+        @keyframes floatHeart {
+            0% { opacity: 0; transform: translate(0, 100vh) rotate(45deg) scale(0.5); }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { opacity: 0; transform: translate(0, -10vh) rotate(45deg) scale(1.2); }
         }
 
         .container {
             position: relative;
             z-index: 10;
             width: 90%;
-            max-width: 650px;
-            padding: 20px;
-        }
-
-        /* Initial Tap Button */
-        #start-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            transition: opacity 2s ease;
-        }
-
-        .glowing-heart {
-            font-size: 4.5rem;
-            color: #8b0000; /* Deep red */
-            cursor: pointer;
-            animation: pulseHeart 2s infinite;
-            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8));
-            margin-bottom: 20px;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        @keyframes pulseHeart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)); }
-            100% { transform: scale(1); }
-        }
-
-        .start-text {
-            font-size: 1.1rem;
-            color: #888;
-            font-style: italic;
-            letter-spacing: 1px;
-        }
-
-        /* The Story Text */
-        #story-screen {
-            display: none;
-            position: relative;
-            height: 80vh;
+            max-width: 380px;
+            height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
         }
 
-        .line {
-            font-size: 1.6rem;
+        /* Card Style */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: all 0.6s ease;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.4rem;
+            color: #ff7eb3; /* Soft Pink */
+            margin: 0 0 15px 0;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 1rem;
             line-height: 1.6;
-            color: #e0e0e0;
-            opacity: 0;
-            position: absolute;
-            width: 100%;
-            transform: translateY(20px);
-            transition: opacity 2.5s ease, transform 2.5s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
-        }
-
-        .line.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .line.fade-out {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        /* Highlight Colors */
-        .highlight-gold {
-            color: #d4af37; /* Gold */
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .highlight-red {
-            color: #ff4b2b; /* Emotional Red */
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: bold;
-        }
-
-        /* Final Screen */
-        #final-screen {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 3s ease;
-        }
-
-        #final-screen.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .final-photo {
-            width: 250px;
-            height: auto;
-            border-radius: 5px;
-            border: 3px solid #222;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
             margin-bottom: 20px;
-            filter: grayscale(10%) contrast(110%);
+            color: #f0f0f0;
         }
 
-        .final-text {
-            font-size: 1.2rem;
-            color: #ccc;
-            line-height: 1.8;
-            margin-bottom: 30px;
+        /* Photo Frame Style (Polaroid Look) */
+        .photo-frame {
+            background: white;
+            padding: 10px 10px 35px 10px; 
+            border-radius: 4px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            margin: 0 auto 20px auto;
+            width: 240px;
+            transform: rotate(-3deg);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 50;
         }
 
-        .signature {
-            font-family: 'Cinzel', serif;
-            color: #8b0000;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
+        .photo-frame img {
+            width: 100%;
+            border-radius: 2px;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 126, 179, 0.4);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 126, 179, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 126, 179, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 126, 179, 0); }
+        }
+
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 1s forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Certificate Styles */
+        .certificate {
+            border: 4px double #ff7eb3;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            transform: rotate(2deg);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Heart Beat Animation */
+        .heartbeat {
+            font-size: 3.5rem;
+            color: #ff4b2b;
+            animation: beat 1.2s infinite;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow" id="bg-glow"></div>
+    <div id="heart-container"></div>
 
     <audio id="bgMusic" loop>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
-        
-        <div id="start-screen">
-            <div class="glowing-heart" onclick="beginJourney()">❤️</div>
-            <div class="start-text">Take a deep breath...<br>Then tap the heart.</div>
+
+        <div id="step0" class="card">
+            <h1>Promise Day 🤞</h1>
+            <p>Betu, these photos are proof of our beautiful moments.<br>Today, I make 8 lifetime promises to you.</p>
+            <button class="btn" onclick="startPromises()">Tap to Begin ❤️</button>
         </div>
 
-        <div id="story-screen" style="display: none;">
-            <div class="line" id="line0">Meri Betu...</div>
-            <div class="line" id="line1">Aaj hum door zaroor hain, par meri har dhadkan sirf tumhara naam leti hai.</div>
-            <div class="line" id="line2">Raat ko jab akele hota hoon, toh bas wo sapne dekhta hoon jo humne ek saath dekhe hain...</div>
-            <div class="line" id="line3">Ek chota sa aashiyana, tumhari godh mein mera sir, aur hamara aane wala kal.</div>
-            <div class="line" id="line4">Tumhe lagta hoga Guplu kabhi kabhi gussa karta hai, ya ajeeb behave karta hai...</div>
-            <div class="line" id="line5">Par sach kahu? Main tumhe lekar itna possessive hoon ki kisi aur ka tumhe dekhna bhi bardasht nahi hota.</div>
-            <div class="line" id="line6">Tum sirf meri ho. Meri thi, aur hamesha meri rahogi. Aur ye haq main kisi ko nahi dunga.</div>
-            <div class="line" id="line7">Main tumhe itna pyaar dena chahta hoon, jitna is duniya mein kisi ne kisi ko na diya ho.</div>
-            <div class="line" id="line8">Tumhara gussa, tumhara bachpana, tumhari har zidd... sab mujhe qubool hai.</div>
-            <div class="line" id="line9">Tumhe pata hai meri sabse badi sacchai kya hai?</div>
-            <div class="line highlight-gold" id="line10">Is poori duniya mein...<br>Is poore universe mein...</div>
-            <div class="line highlight-red" id="line11">Koi bhi Betu ko uske Guplu se zyada pyaar nahi kar sakta.<br><span style="font-size:1.2rem; color:#888;">Koi bhi nahi.</span></div>
-            <div class="line" id="line12">Duniya kehti hai ki insaan ek hi baar jeeta hai...</div>
-            <div class="line highlight-gold" id="line13">Par mujhe yakeen hai, I have loved you in every birth I have ever taken.</div>
-            <div class="line" id="line14">Aur aage aane wale har janam mein, meri rooh sirf aur sirf tumhi ko dhoondhegi.</div>
-            <div class="line" id="line15">Maine tumhe apni taqdeer mein nahi, apni rooh mein likhwaya hai.</div>
-            <div class="line" id="line16">Aaj is din par, mere paas tumhe dene ke liye sirf ek hi cheez hai... mera sab kuch.</div>
-            <div class="line highlight-red" id="line17" style="font-size: 2.4rem;">Will you be my Valentine...<br>not just for today, but for this lifetime and forever?</div>
-        </div>
-
-        <div id="final-screen">
-            <img src="promise5.jpg" alt="Our Eyes" class="final-photo">
-            <div class="final-text">
-                "Hold me so tight...<br>
-                that even air cannot pass between us."<br><br>
-                In every life, in every universe, I am yours.<br>
-                Happy Valentine's Day, Meri Jaan. 🌹
+        <div id="step1" class="card hidden">
+            <div class="photo-frame">
+                <img src="image_14.png" alt="Fun Times">
             </div>
-            <div class="signature">Always & Forever, Your Guplu</div>
+            <h1>Vow #1: Fun & Joy</h1>
+            <p>I promise to always celebrate life with you, from big moments to small joys. You are my happiness! 🎉</p>
+            <button class="btn" onclick="nextStep(2)">I Accept 🥂</button>
+        </div>
+
+        <div id="step2" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(2deg);">
+                <img src="image_15.png" alt="My Princess">
+            </div>
+            <h1>Vow #2: To Support</h1>
+            <p>I promise to be your biggest fan, to support your dreams, and to always treat you like my Queen. 👑</p>
+            <button class="btn" onclick="nextStep(3)">Pinky Promise 🤙</button>
+        </div>
+
+        <div id="step3" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(-3deg);">
+                <img src="image_16.png" alt="Sweet Moments">
+            </div>
+            <h1>Vow #3: Patience</h1>
+            <p>I promise to be patient, to feed you cake (and love!), and to handle all your moods with a smile. 🍰😊</p>
+            <button class="btn" onclick="nextStep(4)">Done Deal 😂</button>
+        </div>
+
+        <div id="step4" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(1deg);">
+                <img src="image_17.png" alt="Beautiful">
+            </div>
+            <h1>Vow #4: Hype Man</h1>
+            <p>I promise to always admire your beauty, inside and out. You will always be the most beautiful woman to me. 🌹💃</p>
+            <button class="btn" onclick="nextStep(5)">Approved ✅</button>
+        </div>
+
+        <div id="step5" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(-2deg);">
+                <img src="image_18.png" alt="Together">
+            </div>
+            <h1>Vow #5: Teamwork</h1>
+            <p>I promise that we will always be a team. No matter what life throws at us, we face it together. 🤝❤️</p>
+            <button class="btn" onclick="nextStep(6)">Forever ❤️</button>
+        </div>
+
+        <div id="step6" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(3deg);">
+                <img src="image_19.png" alt="Comfort">
+            </div>
+            <h1>Vow #6: Comfort</h1>
+            <p>I promise to be your safe space, your comfort zone, and the eyes that always look at you with love. 🤗✨</p>
+            <button class="btn" onclick="nextStep(7)">Always 🏡</button>
+        </div>
+
+        <div id="step7" class="card hidden">
+            <div class="photo-frame">
+                <img src="promise7.jpg" alt="Kiss">
+            </div>
+            <h1>Vow #7: Romance</h1>
+            <p>I promise to keep the romance alive, to kiss you goodnight, and to remind you every day how much I love you. 😘</p>
+            <button class="btn" onclick="nextStep(8)">Seal the Deal 💋</button>
+        </div>
+
+        <div id="step8" class="card hidden">
+            <div class="photo-frame" style="transform: rotate(-2deg);">
+                <img src="promise8.jpg" alt="Hug">
+            </div>
+            <h1>Vow #8: Forever</h1>
+            <p>I promise to hold you tight, to be your strength, and to love you until the very end of time. 🫂❤️</p>
+            <button class="btn" onclick="nextStep(9)">My Final Vow... 💫</button>
+        </div>
+
+        <div id="step9" class="card hidden">
+            <div class="certificate">
+                <h2 style="font-family: 'Dancing Script'; margin:0; color:#d4af37; font-size: 2rem;">Certificate of Promise</h2>
+                <p style="color:#333; font-size:1rem; margin: 20px 0; line-height: 1.6;">
+                    This certifies that<br><b>Betu (Shivangi)</b><br>owns Guplu's heart and these 8 promises forever.
+                </p>
+                <div style="text-align: right; font-family: 'Dancing Script'; color: #555; font-size: 1.3rem;">
+                    Signed,<br><b>Your Guplu 🖊️</b>
+                </div>
+            </div>
+            <button class="btn" onclick="nextStep(10)">One Last Wish... 💫</button>
+        </div>
+
+        <div id="step10" class="card hidden">
+            <span class="heartbeat">❤️</span>
+            <h1>Be My Forever</h1>
+            <p style="font-size: 1.2rem; font-weight: 500; margin-top: 20px;">
+                "Hold me so tight...<br>
+                that even air cannot pass between us."
+            </p>
+            <p style="font-size: 1rem; opacity: 0.8;">I love you, Betu.</p>
         </div>
 
     </div>
 
     <script>
-        // Timings for each line to stay on screen (in milliseconds)
-        const timings = [
-            4000,  // 0: Meri Betu...
-            5000,  // 1: Door zaroor hain, par dhadkan
-            6000,  // 2: Raat ko jab akele, sapne dekhta hoon
-            6000,  // 3: Ek chota sa aashiyana (The Dream)
-            5500,  // 4: Tumhe lagta hoga gussa karta hoon
-            6500,  // 5: Possessive hoon, bardasht nahi hota (Jealousy)
-            6000,  // 6: Tum sirf meri ho (Possessiveness)
-            6000,  // 7: Itna pyaar dena chahta hoon (Massive Love)
-            5500,  // 8: Tumhara gussa, bachpana qubool hai
-            4000,  // 9: Sabse badi sacchai
-            4500,  // 10: Poori duniya mein (Gold)
-            6500,  // 11: Koi Guplu se zyada pyaar nahi kar sakta (Red)
-            5000,  // 12: Duniya kehti hai ek baar jeete hain
-            6000,  // 13: Loved you in every birth (Gold)
-            6000,  // 14: Har janam mein dhoondhegi
-            5500,  // 15: Taqdeer nahi, rooh mein
-            5500,  // 16: Dene ke liye mera sab kuch
-            7500   // 17: Will you be my Valentine forever? (Red - Long Pause)
-        ];
-
-        function beginJourney() {
-            // Start Music
-            var music = document.getElementById("bgMusic");
-            music.volume = 0.6; // Slightly louder for emotional impact
-            music.play().catch(error => console.log("Audio play failed"));
-
-            // Hide start screen, show ambient background
-            document.getElementById('start-screen').style.opacity = '0';
-            document.getElementById('bg-glow').style.opacity = '1';
-            
-            setTimeout(() => {
-                document.getElementById('start-screen').style.display = 'none';
-                document.getElementById('story-screen').style.display = 'flex';
-                playLines(0);
-            }, 2000);
+        // Create Floating Hearts Effect
+        const container = document.getElementById('heart-container');
+        for(let i=0; i<20; i++) {
+            let h = document.createElement('div');
+            h.className = 'heart-bg';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            h.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(h);
         }
 
-        function playLines(index) {
-            if (index < timings.length) {
-                let currentLine = document.getElementById('line' + index);
-                
-                // Fade In
-                currentLine.classList.add('visible');
+        // Music Start Function
+        function startPromises() {
+            var music = document.getElementById("bgMusic");
+            music.volume = 0.5;
+            music.play().catch(error => console.log("Audio play failed"));
+            nextStep(1);
+        }
 
-                // Wait, then Fade Out
-                setTimeout(() => {
-                    currentLine.classList.remove('visible');
-                    currentLine.classList.add('fade-out');
-                    
-                    // Move to next line slightly before current finishes fading
-                    setTimeout(() => {
-                        playLines(index + 1);
-                    }, 1200); 
+        // Navigation Function
+        function nextStep(id) {
+            document.querySelectorAll('.card').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('fade-in');
+            });
 
-                }, timings[index]);
-
-            } else {
-                // All lines done, show final screen
-                setTimeout(() => {
-                    document.getElementById('story-screen').style.display = 'none';
-                    document.getElementById('final-screen').classList.add('visible');
-                    // Increase glow intensity for finale to a deep romantic red
-                    document.getElementById('bg-glow').style.background = 'radial-gradient(circle at center, rgba(160, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 80%)';
-                }, 1000);
-            }
+            const next = document.getElementById('step' + id);
+            next.classList.remove('hidden');
+            next.classList.add('fade-in');
         }
     </script>
 </body>
