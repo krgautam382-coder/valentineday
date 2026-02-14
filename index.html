@@ -21,12 +21,41 @@
             text-align: center;
         }
 
+        /* Magical Floating Fireflies */
+        #particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .firefly {
+            position: absolute;
+            bottom: -10px;
+            background-color: #ff4b2b;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #ff4b2b;
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
         /* Ambient glowing background */
         .ambient-glow {
             position: absolute;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, rgba(139, 0, 0, 0.15) 0%, rgba(0, 0, 0, 1) 70%);
+            background: radial-gradient(circle at center, rgba(139, 0, 0, 0.2) 0%, rgba(0, 0, 0, 1) 80%);
             z-index: 0;
             opacity: 0;
             transition: opacity 3s ease;
@@ -36,7 +65,7 @@
             position: relative;
             z-index: 10;
             width: 90%;
-            max-width: 650px;
+            max-width: 700px;
             padding: 20px;
             height: 90vh;
             display: flex;
@@ -55,27 +84,28 @@
         }
 
         .glowing-heart {
-            font-size: 4.5rem;
-            color: #8b0000; 
+            font-size: 5rem;
+            color: #d32f2f; 
             cursor: pointer;
-            animation: pulseHeart 2s infinite;
-            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8));
+            animation: pulseHeart 1.5s infinite;
+            filter: drop-shadow(0 0 20px rgba(211, 47, 47, 0.8));
             margin-bottom: 20px;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes pulseHeart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.6)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 30px rgba(255, 75, 43, 0.9)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.6)); }
         }
 
         .start-text {
-            font-size: 1.1rem;
-            color: #888;
+            font-size: 1.2rem;
+            color: #aaa;
             font-style: italic;
             letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         /* The Story Screen Container */
@@ -88,57 +118,61 @@
             align-items: center;
         }
 
-        /* Image Container for Story */
+        /* Premium Image Container */
         .story-image-container {
             position: relative;
             width: 100%;
-            height: 300px; /* Fixed height for images */
+            height: 320px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .story-img {
             position: absolute;
-            max-width: 100%;
+            max-width: 90%;
             max-height: 100%;
-            height: auto;
-            width: auto;
-            border-radius: 8px;
-            border: 2px solid #333;
-            box-shadow: 0 0 25px rgba(139, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 0, 0, 0.4);
             opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 2s ease, transform 2s ease;
-            filter: contrast(110%) brightness(90%);
+            transform: scale(0.9);
+            filter: contrast(105%) brightness(95%);
+            transition: opacity 2s ease;
         }
 
+        /* Cinematic Slow Zoom Animation */
         .story-img.visible {
             opacity: 1;
-            transform: scale(1);
+            animation: slowZoom 8s linear forwards;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(0.95); }
+            100% { transform: scale(1.05); }
         }
 
         /* Text Container for Story */
         .story-text-container {
             position: relative;
             width: 100%;
-            height: 150px; /* Fixed height for text area */
+            height: 160px; 
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .line {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             line-height: 1.6;
-            color: #e0e0e0;
+            color: #f5f5f5;
             opacity: 0;
             position: absolute;
             width: 100%;
-            transform: translateY(20px);
+            transform: translateY(25px);
             transition: opacity 2s ease, transform 2s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
+            text-shadow: 0 4px 15px rgba(0,0,0,1), 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .line.visible {
@@ -148,12 +182,12 @@
 
         .line.fade-out {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-25px);
         }
 
         /* Highlight Colors */
-        .highlight-gold { color: #d4af37; font-family: 'Cinzel', serif; font-weight: bold; }
-        .highlight-red { color: #ff4b2b; font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.8rem; }
+        .highlight-gold { color: #e6c27a; font-family: 'Cinzel', serif; font-weight: bold; text-shadow: 0 0 15px rgba(230, 194, 122, 0.5); }
+        .highlight-red { color: #ff4b2b; font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.9rem; text-shadow: 0 0 20px rgba(255, 75, 43, 0.5); }
 
         /* Final Screen */
         #final-screen {
@@ -173,34 +207,44 @@
         }
 
         .final-photo {
-            width: 250px;
+            width: 260px;
             height: auto;
-            border-radius: 8px;
-            border: 3px solid #333;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
-            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.6);
+            margin-bottom: 25px;
             filter: contrast(110%);
+            animation: slowZoomFinal 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes slowZoomFinal {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
         }
 
         .final-text {
-            font-size: 1.2rem;
-            color: #ccc;
+            font-size: 1.3rem;
+            color: #ddd;
             line-height: 1.8;
             margin-bottom: 30px;
+            text-shadow: 0 2px 10px rgba(0,0,0,1);
         }
 
         .signature {
             font-family: 'Cinzel', serif;
-            color: #8b0000;
-            font-size: 1.5rem;
+            color: #ff4b2b;
+            font-size: 1.6rem;
             letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 75, 43, 0.4);
         }
 
     </style>
 </head>
 <body>
 
+    <div id="particles-container"></div>
     <div class="ambient-glow" id="bg-glow"></div>
+    
     <audio id="bgMusic" loop hidden>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -216,7 +260,7 @@
             
             <div class="story-image-container">
                 <img src="image_15.jpg" id="img-set-1" class="story-img">
-                <img src="image_14.jpg" id="img-set-2" class="story-img">
+                <img src="image_19.jpg" id="img-set-2" class="story-img">
                 <img src="image_17.jpg" id="img-set-3" class="story-img">
                 <img src="image_16.jpg" id="img-set-4" class="story-img">
                 <img src="image_18.jpg" id="img-set-5" class="story-img">
@@ -226,22 +270,22 @@
 
             <div class="story-text-container">
                 <div class="line" id="line0">Meri Betu...</div>
-                <div class="line" id="line1">Aaj hum door zaroor hain, par meri har dhadkan sirf tumhara naam leti hai.</div>
+                <div class="line" id="line1">Aaj hum door zaroor hain, par meri har dhadkan sirf aapka naam leti hai.</div>
                 <div class="line" id="line2">Raat ko jab akele hota hoon, toh bas wo sapne dekhta hoon jo humne ek saath dekhe hain...</div>
-                <div class="line" id="line3">Ek chota sa aashiyana, tumhari godh mein mera sir, aur hamara aane wala kal.</div>
-                <div class="line" id="line4">Tumhe lagta hoga Guplu kabhi kabhi gussa karta hai, ya ajeeb behave karta hai...</div>
-                <div class="line" id="line5">Par sach kahu? Main tumhe lekar itna possessive hoon ki kisi aur ka tumhe dekhna bhi bardasht nahi hota.</div>
-                <div class="line" id="line6">Tum sirf meri ho. Meri thi, aur hamesha meri rahogi. Ye haq main kisi ko nahi dunga.</div>
-                <div class="line" id="line7">Main tumhe itna pyaar dena chahta hoon, jitna is duniya mein kisi ne kisi ko na diya ho.</div>
-                <div class="line" id="line8">Tumhara gussa, tumhara bachpana, tumhari har zidd... sab mujhe qubool hai.</div>
-                <div class="line" id="line9">Tumhe pata hai meri sabse badi sacchai kya hai?</div>
+                <div class="line" id="line3">Ek chota sa aashiyana, aapki godh mein mera sir, aur hamara aane wala kal.</div>
+                <div class="line" id="line4">Aapko lagta hoga Guplu kabhi kabhi gussa karta hai, ya ajeeb behave karta hai...</div>
+                <div class="line" id="line5">Par sach kahu? Main aapko lekar itna possessive hoon ki kisi aur ka aapko dekhna bhi bardasht nahi hota.</div>
+                <div class="line" id="line6">Aap sirf meri ho. Meri thi, aur hamesha meri rahogi. Ye haq main kisi ko nahi dunga.</div>
+                <div class="line" id="line7">Main aapko itna pyaar dena chahta hoon, jitna is duniya mein kisi ne kisi ko na diya ho.</div>
+                <div class="line" id="line8">Aapka gussa, aapka bachpana, aapki har zidd... sab mujhe qubool hai.</div>
+                <div class="line" id="line9">Aapko pata hai meri sabse badi sacchai kya hai?</div>
                 <div class="line highlight-gold" id="line10">Is poori duniya mein...<br>Is poore universe mein...</div>
                 <div class="line highlight-red" id="line11">Koi bhi Betu ko uske Guplu se zyada pyaar nahi kar sakta.<br><span style="font-size:1rem; color:#888;">Koi nahi.</span></div>
                 <div class="line" id="line12">Duniya kehti hai ki insaan ek hi baar jeeta hai...</div>
                 <div class="line highlight-gold" id="line13">Par mujhe yakeen hai, I have loved you in every birth I have ever taken.</div>
-                <div class="line" id="line14">Aur aage aane wale har janam mein, meri rooh sirf aur sirf tumhi ko dhoondhegi.</div>
-                <div class="line" id="line15">Maine tumhe apni taqdeer mein nahi, apni rooh mein likhwaya hai.</div>
-                <div class="line" id="line16">Aaj is din par, mere paas tumhe dene ke liye sirf ek hi cheez hai... mera sab kuch.</div>
+                <div class="line" id="line14">Aur aage aane wale har janam mein, meri rooh sirf aur sirf aapko hi dhoondhegi.</div>
+                <div class="line" id="line15">Maine aapko apni taqdeer mein nahi, apni rooh mein likhwaya hai.</div>
+                <div class="line" id="line16">Aaj is din par, mere paas aapko dene ke liye sirf ek hi cheez hai... mera sab kuch.</div>
                 <div class="line highlight-red" id="line17">Will you be my Valentine...<br>not just for today, but for forever?</div>
             </div>
         </div>
@@ -260,17 +304,29 @@
     </div>
 
     <script>
+        // Generate Magical Fireflies
+        const particleContainer = document.getElementById('particles-container');
+        for (let i = 0; i < 40; i++) {
+            let firefly = document.createElement('div');
+            firefly.classList.add('firefly');
+            firefly.style.left = Math.random() * 100 + 'vw';
+            firefly.style.width = Math.random() * 4 + 2 + 'px';
+            firefly.style.height = firefly.style.width;
+            firefly.style.animationDuration = Math.random() * 10 + 10 + 's';
+            firefly.style.animationDelay = Math.random() * 10 + 's';
+            particleContainer.appendChild(firefly);
+        }
+
         const timings = [4000, 5000, 6000, 6000, 5500, 6500, 6000, 6000, 5500, 4000, 4500, 6500, 5000, 6000, 6000, 5500, 5500, 7500];
         
-        // Map specific lines to specific image sets
         const imageChangePoints = {
-            0: 'img-set-1', // Missing Her
-            3: 'img-set-2', // The Dream
-            4: 'img-set-3', // Possessiveness
-            7: 'img-set-4', // Acceptance
-            9: 'img-set-5', // Big Truth
-            12: 'img-set-6', // Every Birth
-            16: 'img-set-7'  // Proposal
+            0: 'img-set-1', 
+            3: 'img-set-2', 
+            4: 'img-set-3', 
+            7: 'img-set-4', 
+            9: 'img-set-5', 
+            12: 'img-set-6', 
+            16: 'img-set-7'  
         };
 
         let currentVisibleImageId = null;
@@ -292,28 +348,25 @@
 
         function playLines(index) {
             if (index < timings.length) {
-                // 1. Handle Image Changes
+                // Handle Image Changes
                 if (imageChangePoints[index]) {
-                    // Hide previous image if exists
                     if (currentVisibleImageId) {
                         document.getElementById(currentVisibleImageId).classList.remove('visible');
                     }
-                    // Show new image
                     const newImageId = imageChangePoints[index];
                     document.getElementById(newImageId).classList.add('visible');
                     currentVisibleImageId = newImageId;
                 }
 
-                // 2. Handle Text
+                // Handle Text
                 let currentLine = document.getElementById('line' + index);
                 currentLine.classList.add('visible');
 
-                // Wait, then fade out text
+                // Fade out text
                 setTimeout(() => {
                     currentLine.classList.remove('visible');
                     currentLine.classList.add('fade-out');
                     
-                    // If the NEXT line triggers an image change, fade out current image now
                     if (imageChangePoints[index + 1] && currentVisibleImageId) {
                          document.getElementById(currentVisibleImageId).classList.remove('visible');
                     }
